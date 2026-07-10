@@ -472,8 +472,15 @@
     .menu-item-card{flex-direction:column;align-items:stretch;}
   }
 </style>
+<link rel="stylesheet" href="sandubao-premium.css">
 </head>
 <body>
+
+<div id="premiumLoader" class="premium-loader">
+  <img class="premium-loader-logo" src="https://res.cloudinary.com/nexchat/image/upload/v1783654023/nexchat/media/emaryw507e4vfboma2b7.png" alt="">
+  <div class="premium-loader-bar"><span></span></div>
+  <p class="premium-loader-text">Preparando seu lanche...</p>
+</div>
 
 <canvas id="steamCanvas"></canvas>
 
@@ -1525,6 +1532,8 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   revealEls.forEach(el=>io.observe(el));
 </script>
+
+<script defer src="sandubao-premium.js"></script>
 
 </body>
 </html>
