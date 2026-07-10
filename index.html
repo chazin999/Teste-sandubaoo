@@ -1343,6 +1343,27 @@
             '<label class="of-label" for="ckNome">Seu nome</label>' +
             '<input type="text" id="ckNome" placeholder="Como podemos te chamar?" required>' +
           '</div>' +
+          '<div class="of-group">' +
+            '<label class="of-label" for="ckTelefone">Seu telefone</label>' +
+            '<input type="tel" id="ckTelefone" placeholder="(00) 00000-0000" required>' +
+          '</div>' +
+        '</div>' +
+        '<div class="of-group">' +
+          '<label class="of-label">Entrega ou retirada?</label>' +
+          '<div class="delivery-toggle">' +
+            '<div class="delivery-opt">' +
+              '<input type="radio" id="ckEntrega" name="ckTipoEntrega" value="entrega" checked>' +
+              '<label for="ckEntrega">🏍️ Entrega</label>' +
+            '</div>' +
+            '<div class="delivery-opt">' +
+              '<input type="radio" id="ckRetirada" name="ckTipoEntrega" value="retirada">' +
+              '<label for="ckRetirada">🏠 Retirada</label>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="of-group of-address show" id="ckAddressWrap">' +
+          '<label class="of-label" for="ckEndereco">Endereço de entrega</label>' +
+          '<input type="text" id="ckEndereco" placeholder="Rua, número, bairro..." required>' +
         '</div>' +
         '<div class="of-group">' +
           '<label class="of-label" for="ckObs">Observações gerais (opcional)</label>' +
