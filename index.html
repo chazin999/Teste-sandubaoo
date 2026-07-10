@@ -1343,27 +1343,6 @@
             '<label class="of-label" for="ckNome">Seu nome</label>' +
             '<input type="text" id="ckNome" placeholder="Como podemos te chamar?" required>' +
           '</div>' +
-          '<div class="of-group">' +
-            '<label class="of-label" for="ckTelefone">Seu telefone</label>' +
-            '<input type="tel" id="ckTelefone" placeholder="(00) 00000-0000" required>' +
-          '</div>' +
-        '</div>' +
-        '<div class="of-group">' +
-          '<label class="of-label">Entrega ou retirada?</label>' +
-          '<div class="delivery-toggle">' +
-            '<div class="delivery-opt">' +
-              '<input type="radio" id="ckEntrega" name="ckTipoEntrega" value="entrega" checked>' +
-              '<label for="ckEntrega">🏍️ Entrega</label>' +
-            '</div>' +
-            '<div class="delivery-opt">' +
-              '<input type="radio" id="ckRetirada" name="ckTipoEntrega" value="retirada">' +
-              '<label for="ckRetirada">🏠 Retirada</label>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="of-group of-address show" id="ckAddressWrap">' +
-          '<label class="of-label" for="ckEndereco">Endereço de entrega</label>' +
-          '<input type="text" id="ckEndereco" placeholder="Rua, número, bairro..." required>' +
         '</div>' +
         '<div class="of-group">' +
           '<label class="of-label" for="ckObs">Observações gerais (opcional)</label>' +
@@ -1377,21 +1356,6 @@
   }
 
   function bindCheckoutEvents(){
-    const addressWrap = document.getElementById('ckAddressWrap');
-    const enderecoInput = document.getElementById('ckEndereco');
-
-    document.querySelectorAll('input[name="ckTipoEntrega"]').forEach(function(radio){
-      radio.addEventListener('change', function(){
-        if(this.value === 'entrega'){
-          addressWrap.classList.add('show');
-          enderecoInput.setAttribute('required', 'required');
-        } else {
-          addressWrap.classList.remove('show');
-          enderecoInput.removeAttribute('required');
-        }
-      });
-    });
-
     document.getElementById('checkoutForm').addEventListener('submit', handleCheckoutSubmit);
   }
 
@@ -1402,8 +1366,6 @@
     linhas.push('');
     linhas.push('Cliente: ' + customer.nome);
     linhas.push('');
-    linhas.push('Telefone: ' + customer.telefone);
-    linhas.push('');
     linhas.push('Pedido:');
     orderState.cart.forEach(function(item){
       const variantTxt = item.variantLabel ? ' (' + item.variantLabel + ')' : '';
@@ -1411,9 +1373,6 @@
       item.addons.forEach(function(a){ linhas.push('   - ' + a.name); });
       if(item.obs) linhas.push('   Obs: ' + item.obs);
     });
-    linhas.push('');
-    linhas.push('Entrega:');
-    linhas.push(customer.entregaInfo);
     linhas.push('');
     linhas.push('Observações:');
     linhas.push(customer.obsGeral || 'Nenhuma');
@@ -1427,17 +1386,10 @@
     e.preventDefault();
 
     const nome = document.getElementById('ckNome').value.trim();
-    const telefone = document.getElementById('ckTelefone').value.trim();
     const obsGeral = document.getElementById('ckObs').value.trim();
-    const tipoEntrega = document.querySelector('input[name="ckTipoEntrega"]:checked').value;
-    const endereco = document.getElementById('ckEndereco').value.trim();
 
-    if(!nome || !telefone){
-      alert('Por favor, preencha seu nome e telefone.');
-      return;
-    }
-    if(tipoEntrega === 'entrega' && !endereco){
-      alert('Por favor, informe o endereço de entrega.');
+    if(!nome){
+      alert('Por favor, preencha seu nome.');
       return;
     }
     if(orderState.cart.length === 0){
@@ -1447,9 +1399,7 @@
 
     const customer = {
       nome: nome,
-      telefone: telefone,
-      obsGeral: obsGeral,
-      entregaInfo: tipoEntrega === 'entrega' ? endereco : 'Retirada no local'
+      obsGeral: obsGeral
     };
 
     const mensagem = buildWhatsAppMessage(customer);
