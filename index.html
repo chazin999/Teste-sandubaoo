@@ -39,12 +39,24 @@
     background:linear-gradient(180deg, rgba(11,9,6,.94), rgba(11,9,6,0));
     padding:18px 24px;}
   .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
-  .brandmark{display:flex;align-items:center;gap:10px;}
-  .brandmark .ic{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));
-    display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:16px;color:#1A1204;}
+  .brandmark{display:flex;align-items:center;gap:12px;}
+  .brandmark .logo-img{width:46px;height:46px;object-fit:contain;display:block;border-radius:11px;
+    filter:drop-shadow(0 6px 16px rgba(217,164,74,.4));
+    animation:logoFloat 4.2s ease-in-out infinite, logoGlow 3.2s ease-in-out infinite;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1);}
+  .brandmark:hover .logo-img{transform:scale(1.08) rotate(-2deg);}
+  @keyframes logoFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+  @keyframes logoGlow{
+    0%,100%{filter:drop-shadow(0 6px 16px rgba(217,164,74,.35));}
+    50%{filter:drop-shadow(0 6px 22px rgba(244,200,96,.7));}
+  }
   .brandmark .nm{font-family:var(--font-display);font-size:16px;letter-spacing:.4px;color:var(--paper);}
-  .nav-cta{font-family:var(--font-mono);font-size:11.5px;font-weight:600;background:var(--gold);color:#1A1204;
-    padding:9px 16px;border-radius:4px;text-transform:uppercase;letter-spacing:.4px;}
+  .nav-cta{font-family:var(--font-mono);font-size:11.5px;font-weight:600;background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#1A1204;
+    padding:9px 16px;border-radius:4px;text-transform:uppercase;letter-spacing:.4px;
+    border:none;cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(217,164,74,.65);}
+  .nav-cta:active{transform:translateY(0) scale(.95);}
+  .footer-logo-img{width:34px;height:34px;}
 
   /* ---------- hero ---------- */
   .hero{position:relative;min-height:96vh;display:flex;align-items:center;padding:120px 24px 60px;overflow:hidden;}
@@ -69,10 +81,14 @@
   .btn{font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.3px;padding:15px 26px;
     border-radius:5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;
     transition:transform .2s ease, box-shadow .2s ease;}
+  .btn{cursor:pointer;}
   .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(0) scale(.96);}
   .btn-primary{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#1A1204;
     box-shadow:0 10px 26px -10px rgba(217,164,74,.6);}
-  .btn-ghost{border:1px solid var(--line-strong);color:var(--paper);}
+  .btn-primary:hover{box-shadow:0 14px 34px -10px rgba(217,164,74,.8);}
+  .btn-ghost{border:1px solid var(--line-strong);color:var(--paper);background:transparent;}
+  .btn-ghost:hover{border-color:var(--gold);background:rgba(217,164,74,.08);}
 
   .hero-strip{display:flex;gap:30px;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap;}
   .hero-strip .s-item .n{font-family:var(--font-mono);font-size:20px;color:var(--gold-bright);font-weight:600;}
@@ -80,7 +96,7 @@
 
   /* ---------- cone illustration ---------- */
   .hero-visual{display:flex;justify-content:center;align-items:center;position:relative;}
-  .hero-visual svg{width:100%;max-width:380px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));
+  .hero-visual img{width:100%;max-width:380px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));
     animation:heroFloat 4.5s ease-in-out infinite;}
   @keyframes heroFloat{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-14px) rotate(1deg);}}
 
@@ -170,13 +186,21 @@
   .of-group textarea{resize:vertical;min-height:78px;}
   .of-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 
-  .qty-stepper{display:inline-flex;align-items:center;gap:0;background:var(--bg3);
-    border:1px solid var(--line);border-radius:8px;overflow:hidden;}
-  .qty-stepper button{width:46px;height:46px;background:transparent;border:none;color:var(--gold-bright);
-    font-size:19px;cursor:pointer;font-family:var(--font-mono);transition:background .2s;}
-  .qty-stepper button:hover{background:rgba(217,164,74,.12);}
-  .qty-stepper .qty-val{width:50px;text-align:center;font-family:var(--font-mono);font-size:16px;
-    color:var(--paper);font-weight:600;}
+  .qty-stepper{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:8px 8px 8px 20px;}
+  .qty-stepper .qty-display{display:flex;flex-direction:column;line-height:1.15;}
+  .qty-stepper .qty-val{font-family:var(--font-mono);font-size:20px;color:var(--paper);font-weight:700;}
+  .qty-stepper .qty-caption{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);
+    text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+  .qty-stepper button{width:52px;height:52px;border-radius:9px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#1A1204;
+    font-size:23px;font-weight:700;font-family:var(--font-mono);line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .18s ease, box-shadow .18s ease;
+    box-shadow:0 8px 18px -10px rgba(217,164,74,.7);}
+  .qty-stepper button:hover{transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(217,164,74,.85);}
+  .qty-stepper button:active{transform:translateY(0) scale(.92);}
+  .qty-stepper button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
 
   .delivery-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .delivery-opt{position:relative;}
@@ -301,14 +325,25 @@
     padding:15px 16px;margin-bottom:10px;}
   .cart-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
   .cart-item-name{font-family:var(--font-display);font-size:16px;color:var(--paper);}
-  .cart-item-name .ci-qty{color:var(--gold-bright);font-family:var(--font-mono);font-size:13px;margin-right:6px;}
   .cart-item-remove{background:none;border:none;color:var(--text-dim);font-size:19px;cursor:pointer;
-    line-height:1;padding:0 2px;transition:color .2s;}
+    line-height:1;padding:0 2px;transition:color .2s, transform .15s;flex-shrink:0;}
   .cart-item-remove:hover{color:var(--red);}
+  .cart-item-remove:active{transform:scale(.85);}
   .cart-item-addons{font-size:11.5px;color:var(--text-dim);margin-top:6px;line-height:1.6;}
   .cart-item-obs{font-size:11.5px;color:var(--gold);margin-top:4px;font-style:italic;}
-  .cart-item-subtotal{font-family:var(--font-mono);color:var(--gold-bright);font-size:13.5px;
-    font-weight:700;margin-top:8px;text-align:right;}
+  .cart-item-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
+  .cart-qty-stepper{display:flex;align-items:center;background:var(--bg2);
+    border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .cart-qty-stepper button{width:32px;height:32px;background:transparent;border:none;
+    color:var(--gold-bright);font-family:var(--font-mono);font-size:16px;font-weight:600;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .2s, transform .15s;}
+  .cart-qty-stepper button:hover{background:rgba(217,164,74,.15);}
+  .cart-qty-stepper button:active{transform:scale(.88);}
+  .cart-qty-stepper button:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+  .cart-qty-stepper .cart-qty-val{width:32px;text-align:center;font-family:var(--font-mono);
+    font-size:13.5px;color:var(--paper);font-weight:700;}
+  .cart-item-subtotal{font-family:var(--font-mono);color:var(--gold-bright);font-size:14.5px;font-weight:700;}
   .cart-empty{text-align:center;color:var(--text-dim);font-size:13px;padding:50px 10px;}
   .cart-add-more{display:block;text-align:center;font-family:var(--font-mono);font-size:12px;
     color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin:16px 0 4px;
@@ -376,6 +411,25 @@
   .fsize .fn{color:var(--text-dim);}
   .fsize .fp{font-family:var(--font-mono);color:var(--gold-bright);font-weight:600;}
 
+  /* ---------- localização ---------- */
+  .locationgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;}
+  .location-info{background:var(--bg2);border:1px solid var(--line);border-radius:14px;
+    padding:38px;display:flex;flex-direction:column;justify-content:center;gap:16px;}
+  .location-info h3{font-family:var(--font-display);font-size:26px;color:var(--gold-bright);}
+  .location-address{font-size:14.5px;color:var(--text-dim);line-height:1.7;}
+  .location-meta{font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);
+    text-transform:uppercase;letter-spacing:.8px;}
+  .location-info .btn{align-self:flex-start;margin-top:6px;}
+  .location-map{border-radius:14px;overflow:hidden;border:1px solid var(--line);
+    min-height:320px;position:relative;background:var(--bg3);}
+  .location-map iframe{width:100%;height:100%;min-height:320px;border:0;display:block;
+    filter:grayscale(.2) contrast(1.05);}
+  @media(max-width:820px){
+    .locationgrid{grid-template-columns:1fr;}
+    .location-map{min-height:260px;}
+    .location-map iframe{min-height:260px;}
+  }
+
   /* ---------- footer / cta ---------- */
   .finalcta{text-align:center;padding:110px 24px;}
   .finalcta h2{font-family:var(--font-display);font-size:clamp(36px,6vw,64px);color:var(--paper);line-height:1;margin-bottom:24px;}
@@ -424,8 +478,11 @@
 <canvas id="steamCanvas"></canvas>
 
 <nav class="nav"><div class="nav-inner">
-  <div class="brandmark"><div class="ic">S</div><div class="nm">SANDUBÃO DELIVERY</div></div>
-  <a class="nav-cta" href="#pedido">Fazer pedido</a>
+  <div class="brandmark">
+    <img class="logo-img" src="https://res.cloudinary.com/nexchat/image/upload/v1783654023/nexchat/media/emaryw507e4vfboma2b7.png" alt="Sandubão Delivery">
+    <div class="nm">SANDUBÃO DELIVERY</div>
+  </div>
+  <button class="nav-cta" type="button" onclick="openModal('menu')">Fazer pedido</button>
 </div></nav>
 
 <!-- HERO -->
@@ -436,7 +493,7 @@
       <h1>O sandubão<span>que vicia.</span></h1>
       <p class="hero-sub">Pão artesanal, recheio generoso e aquele sabor que surpreende — direto de Nova Crixás pro seu prato, quentinho e rápido.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#pedido">🛒 Montar meu pedido</a>
+        <button class="btn btn-primary" type="button" onclick="openModal('menu')">🛒 Montar meu pedido</button>
         <a class="btn btn-ghost" href="#cardapio">Ver cardápio completo</a>
       </div>
       <div class="hero-strip">
@@ -446,38 +503,7 @@
       </div>
     </div>
     <div class="hero-visual">
-      <svg viewBox="0 0 320 380" xmlns="http://www.w3.org/2000/svg">
-        <!-- paper cone -->
-        <path d="M120 180 L200 180 L172 360 Q160 372 148 360 Z" fill="#F4EEE0"/>
-        <path d="M120 180 L200 180 L172 360 Q160 372 148 360 Z" fill="none" stroke="#D9CBA8" stroke-width="2"/>
-        <path d="M132 200 L188 200 L165 350 L155 350 Z" fill="#E7DCC2" opacity=".5"/>
-        <text x="160" y="330" font-family="IBM Plex Mono" font-size="11" fill="#8a7a5c" text-anchor="middle" transform="rotate(3 160 330)">SANDUBÃO</text>
-        <!-- fries poking out -->
-        <g stroke="#E8B23F" stroke-width="7" stroke-linecap="round">
-          <line x1="128" y1="185" x2="118" y2="130"/>
-          <line x1="140" y1="180" x2="126" y2="118"/>
-          <line x1="154" y1="178" x2="146" y2="112"/>
-          <line x1="168" y1="178" x2="176" y2="110"/>
-          <line x1="182" y1="180" x2="196" y2="120"/>
-          <line x1="194" y1="184" x2="210" y2="132"/>
-        </g>
-        <!-- lettuce -->
-        <path d="M118 190 Q135 168 150 188 Q165 166 180 188 Q195 168 205 188 L200 200 L122 200 Z" fill="#7CAE47"/>
-        <!-- corn -->
-        <circle cx="140" cy="182" r="4" fill="#F4C860"/><circle cx="152" cy="176" r="4" fill="#F4C860"/>
-        <circle cx="165" cy="180" r="4" fill="#F4C860"/><circle cx="178" cy="175" r="4" fill="#F4C860"/>
-        <circle cx="190" cy="182" r="4" fill="#F4C860"/><circle cx="146" cy="190" r="4" fill="#F4C860"/>
-        <circle cx="172" cy="190" r="4" fill="#F4C860"/>
-        <!-- sausage/meat -->
-        <ellipse cx="160" cy="196" rx="30" ry="9" fill="#B7412E"/>
-        <ellipse cx="140" cy="200" rx="10" ry="7" fill="#8B5A2B"/>
-        <ellipse cx="180" cy="199" rx="10" ry="7" fill="#8B5A2B"/>
-        <!-- steam -->
-        <g stroke="#EFE3CE" stroke-width="3" fill="none" opacity=".35" stroke-linecap="round">
-          <path d="M140 100 Q135 80 145 65 Q155 50 148 32"><animate attributeName="opacity" values="0;.5;0" dur="3s" repeatCount="indefinite"/></path>
-          <path d="M175 100 Q182 78 172 60 Q162 44 172 28"><animate attributeName="opacity" values="0;.5;0" dur="3.4s" begin=".6s" repeatCount="indefinite"/></path>
-        </g>
-      </svg>
+      <img src="https://res.cloudinary.com/nexchat/image/upload/v1783654023/nexchat/media/emaryw507e4vfboma2b7.png" alt="Sandubão Delivery">
     </div>
   </div>
 </section>
@@ -500,43 +526,6 @@
       <p class="order-desc">Pão artesanal · hambúrguer · presunto · mussarela · bacon · salsicha · ovo · catupiry · alface · tomate · milho · batata palha</p>
       <div class="order-price">R$ 30,90 <span>por unidade</span></div>
       <button class="btn btn-primary" id="openOrderModalBtn" type="button">🧾 Fazer Pedido</button>
-    </div>
-  </div>
-</section>
-
-<!-- DESTAQUE -->
-<section class="wrap">
-  <div class="section-head reveal">
-    <div class="eyebrow">O maior de todos</div>
-    <h2>Conheça o<br><em>X-Sandubão.</em></h2>
-    <p>O carro-chefe da casa — dobro de tudo, para quem não brinca em serviço.</p>
-  </div>
-  <div class="feature reveal">
-    <div class="feature-tag">O mais completo</div>
-    <div class="feature-visual">
-      <svg viewBox="0 0 280 280">
-        <ellipse cx="140" cy="252" rx="88" ry="12" fill="#000" opacity=".4"/>
-        <path d="M50 214 Q50 238 90 238 L190 238 Q230 238 230 214 L230 202 L50 202 Z" fill="#C99245"/>
-        <path d="M50 202 L230 202 L226 210 L54 210 Z" fill="#A9762F"/>
-        <path d="M44 196 Q64 176 82 196 Q100 174 120 196 Q138 176 156 196 Q174 174 192 196 Q210 176 228 194 L232 204 L46 204 Z" fill="#6FA83A"/>
-        <rect x="42" y="182" width="196" height="14" rx="6" fill="#F2B93B"/>
-        <rect x="42" y="166" width="196" height="18" rx="8" fill="#5A3420"/>
-        <rect x="42" y="182" width="196" height="8" rx="4" fill="#D9A44A" opacity=".85"/>
-        <rect x="48" y="152" width="184" height="14" rx="6" fill="#F2B93B"/>
-        <rect x="48" y="138" width="184" height="18" rx="8" fill="#5A3420"/>
-        <rect x="54" y="128" width="172" height="10" rx="5" fill="#B7412E"/>
-        <path d="M48 128 Q42 70 140 62 Q238 70 232 128 Z" fill="#D9A44A"/>
-        <ellipse cx="100" cy="94" rx="4" ry="6" fill="#F4E3B8" transform="rotate(-18 100 94)"/>
-        <ellipse cx="130" cy="82" rx="4" ry="6" fill="#F4E3B8" transform="rotate(6 130 82)"/>
-        <ellipse cx="160" cy="86" rx="4" ry="6" fill="#F4E3B8" transform="rotate(-8 160 86)"/>
-        <ellipse cx="188" cy="98" rx="4" ry="6" fill="#F4E3B8" transform="rotate(14 188 98)"/>
-        <ellipse cx="142" cy="104" rx="4" ry="6" fill="#F4E3B8" transform="rotate(2 142 104)"/>
-      </svg>
-    </div>
-    <div class="feature-text">
-      <h3>X-Sandubão</h3>
-      <p class="ingr">Pão · 2× hambúrguer · 2× mussarela · bacon · 2× salsicha · ovo · catupiry · 2× cheddar · alface · tomate · milho · batata palha</p>
-      <div class="feature-price">R$ 42,90 <span>peça já pelo WhatsApp</span></div>
     </div>
   </div>
 </section>
@@ -690,6 +679,26 @@
   </div>
 </section>
 
+<!-- LOCALIZAÇÃO -->
+<section class="wrap" id="localizacao">
+  <div class="section-head reveal">
+    <div class="eyebrow">Onde estamos</div>
+    <h2>Como<br><em>chegar.</em></h2>
+    <p>Confira nosso endereço e trace a rota mais rápida até a loja — direto no seu app de mapas.</p>
+  </div>
+  <div class="locationgrid reveal-stagger">
+    <div class="location-info">
+      <h3>📍 Sandubão Delivery</h3>
+      <p class="location-address" id="locAddress">Carregando endereço...</p>
+      <p class="location-meta" id="locCityLine">Nova Crixás · GO</p>
+      <a class="btn btn-primary" id="locDirectionsBtn" href="#" target="_blank" rel="noopener">🧭 Como chegar</a>
+    </div>
+    <div class="location-map">
+      <iframe id="locMapFrame" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Mapa de localização do Sandubão Delivery"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section class="finalcta reveal">
   <h2>Deu fome?<br><span>Chama no zap.</span></h2>
@@ -697,7 +706,7 @@
 </section>
 
 <footer><div class="footer-inner">
-  <div class="footer-brand"><div class="ic" style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:13px;color:#1A1204;">S</div>
+  <div class="footer-brand"><img class="logo-img footer-logo-img" src="https://res.cloudinary.com/nexchat/image/upload/v1783654023/nexchat/media/emaryw507e4vfboma2b7.png" alt="Sandubão Delivery">
     <span style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);">SANDUBÃO DELIVERY · NOVA CRIXÁS, GO</span></div>
   <div class="footer-links">
     <a href="https://wa.me/5562985285271" target="_blank" rel="noopener">WhatsApp (62) 98528-5271</a>
@@ -782,6 +791,20 @@
 
   /* ---------- 1. CONFIGURAÇÃO ---------- */
   const WHATSAPP_NUMBER = '5562985285271';
+
+  /* ---------- 1b. CONFIGURAÇÃO DE LOCALIZAÇÃO ----------
+     Edite os valores abaixo para atualizar o endereço, o link do Google Maps
+     e as coordenadas exibidas na seção "Como chegar". Nenhuma outra alteração
+     é necessária — o texto, o mapa incorporado e o botão "Como chegar" são
+     preenchidos automaticamente a partir daqui. */
+  const LOCATION_CONFIG = {
+    address: 'Rua Principal, 123 — Centro, Nova Crixás - GO, 76500-000',
+    cityLine: 'Nova Crixás · GO',
+    mapsUrl: 'https://maps.google.com/?q=Nova+Crixás,+GO',
+    lat: -14.0965,
+    lng: -50.2965,
+    zoom: 16
+  };
 
   /* ---------- 2. DADOS DO CARDÁPIO ---------- */
   // Adicionais disponíveis para sanduíches (mesmos preços da seção "Adicionais")
@@ -916,6 +939,25 @@
       return Math.min.apply(null, product.variants.map(function(v){ return v.price; }));
     }
     return product.price;
+  }
+
+  // Preenche a seção "Como chegar" com os dados de LOCATION_CONFIG
+  function renderLocation(){
+    const addrEl = document.getElementById('locAddress');
+    const cityEl = document.getElementById('locCityLine');
+    const mapFrame = document.getElementById('locMapFrame');
+    const dirBtn = document.getElementById('locDirectionsBtn');
+    if(!addrEl || !mapFrame || !dirBtn) return;
+
+    addrEl.textContent = LOCATION_CONFIG.address;
+    if(cityEl) cityEl.textContent = LOCATION_CONFIG.cityLine;
+
+    mapFrame.src = 'https://www.google.com/maps?q=' + LOCATION_CONFIG.lat + ',' + LOCATION_CONFIG.lng +
+      '&z=' + LOCATION_CONFIG.zoom + '&output=embed';
+
+    dirBtn.href = LOCATION_CONFIG.mapsUrl || (
+      'https://www.google.com/maps/dir/?api=1&destination=' + LOCATION_CONFIG.lat + ',' + LOCATION_CONFIG.lng
+    );
   }
 
   /* ---------- 5. REFERÊNCIAS DE DOM (preenchidas no init) ---------- */
@@ -1073,13 +1115,15 @@
       html += '</div></div>';
     }
 
-    // Quantidade
+    // Quantidade — apenas o botão "+" para adicionar unidades ao pedido
     html += (
       '<div class="of-group"><span class="of-label">Quantidade</span>' +
       '<div class="qty-stepper">' +
-        '<button type="button" id="detailQtyMinus" aria-label="Diminuir quantidade">−</button>' +
-        '<span class="qty-val" id="detailQtyVal">' + orderState.detailQty + '</span>' +
-        '<button type="button" id="detailQtyPlus" aria-label="Aumentar quantidade">+</button>' +
+        '<div class="qty-display">' +
+          '<span class="qty-val" id="detailQtyVal">' + orderState.detailQty + '</span>' +
+          '<span class="qty-caption">unidade(s)</span>' +
+        '</div>' +
+        '<button type="button" id="detailQtyPlus" aria-label="Adicionar mais uma unidade">+</button>' +
       '</div></div>'
     );
 
@@ -1135,11 +1179,9 @@
       });
     }
 
-    document.getElementById('detailQtyMinus').addEventListener('click', function(){
-      if(orderState.detailQty > 1){ orderState.detailQty--; updateDetailPrices(); }
-    });
     document.getElementById('detailQtyPlus').addEventListener('click', function(){
       if(orderState.detailQty < 20){ orderState.detailQty++; updateDetailPrices(); }
+      if(orderState.detailQty >= 20) this.disabled = true;
     });
 
     document.getElementById('detailObs').addEventListener('input', function(){
@@ -1186,6 +1228,28 @@
     renderCart();
   }
 
+  // Aumenta a quantidade de um item já presente no carrinho (até o limite de 20)
+  function incrementCartItem(cartId){
+    const item = orderState.cart.find(function(i){ return i.cartId === cartId; });
+    if(!item) return;
+    if(item.qty < 20) item.qty++;
+    updateCartBadges();
+    renderCart();
+  }
+
+  // Diminui a quantidade de um item; ao chegar a 0, remove o item do carrinho
+  function decrementCartItem(cartId){
+    const item = orderState.cart.find(function(i){ return i.cartId === cartId; });
+    if(!item) return;
+    if(item.qty > 1){
+      item.qty--;
+      updateCartBadges();
+      renderCart();
+    } else {
+      removeCartItem(cartId);
+    }
+  }
+
   function getCartTotal(){
     return orderState.cart.reduce(function(sum, item){ return sum + item.unitPrice * item.qty; }, 0);
   }
@@ -1221,11 +1285,18 @@
       return (
         '<div class="cart-item">' +
           '<div class="cart-item-top">' +
-            '<div class="cart-item-name"><span class="ci-qty">' + item.qty + 'x</span>' + item.name + variantHtml + '</div>' +
+            '<div class="cart-item-name">' + item.name + variantHtml + '</div>' +
             '<button type="button" class="cart-item-remove" data-id="' + item.cartId + '" aria-label="Remover item">×</button>' +
           '</div>' +
           addonsHtml + obsHtml +
-          '<div class="cart-item-subtotal">' + formatBRL(item.unitPrice * item.qty) + '</div>' +
+          '<div class="cart-item-bottom">' +
+            '<div class="cart-qty-stepper">' +
+              '<button type="button" class="cart-qty-minus" data-id="' + item.cartId + '" aria-label="Diminuir quantidade">−</button>' +
+              '<span class="cart-qty-val">' + item.qty + '</span>' +
+              '<button type="button" class="cart-qty-plus" data-id="' + item.cartId + '" aria-label="Aumentar quantidade"' + (item.qty >= 20 ? ' disabled' : '') + '>+</button>' +
+            '</div>' +
+            '<div class="cart-item-subtotal">' + formatBRL(item.unitPrice * item.qty) + '</div>' +
+          '</div>' +
         '</div>'
       );
     }).join('');
@@ -1245,6 +1316,12 @@
     document.getElementById('goToCheckoutBtn').addEventListener('click', function(){ showStep('checkout'); });
     dom.stepCart.querySelectorAll('.cart-item-remove').forEach(function(btn){
       btn.addEventListener('click', function(){ removeCartItem(btn.dataset.id); });
+    });
+    dom.stepCart.querySelectorAll('.cart-qty-minus').forEach(function(btn){
+      btn.addEventListener('click', function(){ decrementCartItem(btn.dataset.id); });
+    });
+    dom.stepCart.querySelectorAll('.cart-qty-plus').forEach(function(btn){
+      btn.addEventListener('click', function(){ incrementCartItem(btn.dataset.id); });
     });
   }
 
@@ -1437,6 +1514,7 @@
   }
 
   initOrderSystem();
+  renderLocation();
 
   const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
   const io = new IntersectionObserver((entries)=>{
