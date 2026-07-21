@@ -356,6 +356,15 @@
     padding:16px 26px;margin-top:18px;}
   #goToCheckoutBtn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
+  /* ---------- forma de pagamento (checkout) ---------- */
+.payment-toggle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px;}
+.payment-opt{border:1px solid var(--line);border-radius:8px;padding:14px 8px;
+    font-family:var(--font-mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.4px;
+    color:var(--text-dim);cursor:pointer;transition:all .2s;background:var(--bg3);
+    display:flex;flex-direction:column;align-items:center;gap:6px;}
+.payment-opt .po-icon{font-size:20px;}
+.payment-opt:hover{border-color:var(--line-strong);color:var(--paper);}
+.payment-opt.active{border-color:var(--gold);color:var(--gold-bright);background:rgba(217,164,74,.1);}
   /* etapa de checkout */
   .checkout-summary{background:var(--bg3);border:1px solid var(--line);border-radius:10px;
     padding:14px 16px;margin-bottom:22px;font-size:12.5px;color:var(--text-dim);}
@@ -922,7 +931,8 @@
     detailVariantIdx: 0,
     detailAddonIds: new Set(),
     detailQty: 1,
-    detailObs: ''
+    detailObs: '',
+    paymentMethod: null       // forma de pagamento escolhida no checkout: 'cartao' | 'pix' | 'dinheiro'
   };
 
   /* ---------- 4. UTILITÁRIOS ---------- */
@@ -1345,6 +1355,14 @@
           '</div>' +
         '</div>' +
         '<div class="of-group">' +
+          '<label class="of-label">Forma de pagamento</label>' +
+          '<div class="payment-toggle" id="paymentToggle">' +
+            '<button type="button" class="payment-opt" data-method="cartao"><span class="po-icon">💳</span>Cartão</button>' +
+            '<button type="button" class="payment-opt" data-method="pix"><span class="po-icon">📱</span>Pix</button>' +
+            '<button type="button" class="payment-opt" data-method="dinheiro"><span class="po-icon">💵</span>Dinheiro</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="of-group">' +
           '<label class="of-label" for="ckObs">Observações gerais (opcional)</label>' +
           '<textarea id="ckObs" placeholder="Alguma informação extra sobre o pedido?"></textarea>' +
         '</div>' +
@@ -1357,7 +1375,20 @@
 
   function bindCheckoutEvents(){
     document.getElementById('checkoutForm').addEventListener('submit', handleCheckoutSubmit);
+
+    document.querySelectorAll('#paymentToggle .payment-opt').forEach(function(btn){
+      if(orderState.paymentMethod === btn.dataset.method) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        orderState.paymentMethod = btn.dataset.method;
+        document.querySelectorAll('#paymentToggle .payment-opt').forEach(function(b){
+          b.classList.toggle('active', b === btn);
+        });
+      });
+    });
   }
+
+  // Rótulos de exibição para cada forma de pagamento (usados na mensagem do WhatsApp)
+  const PAYMENT_LABELS = { cartao:'Cartão', pix:'Pix', dinheiro:'Dinheiro' };
 
   /* ---------- 11. FINALIZAÇÃO — monta mensagem e abre o WhatsApp ---------- */
   function buildWhatsAppMessage(customer){
@@ -1373,6 +1404,8 @@
       item.addons.forEach(function(a){ linhas.push('   - ' + a.name); });
       if(item.obs) linhas.push('   Obs: ' + item.obs);
     });
+    linhas.push('');
+    linhas.push('Forma de pagamento: ' + (PAYMENT_LABELS[customer.paymentMethod] || 'Não informado'));
     linhas.push('');
     linhas.push('Observações:');
     linhas.push(customer.obsGeral || 'Nenhuma');
@@ -1396,10 +1429,15 @@
       alert('Seu carrinho está vazio.');
       return;
     }
+    if(!orderState.paymentMethod){
+      alert('Escolha a forma de pagamento (Cartão, Pix ou Dinheiro).');
+      return;
+    }
 
     const customer = {
       nome: nome,
-      obsGeral: obsGeral
+      obsGeral: obsGeral,
+      paymentMethod: orderState.paymentMethod
     };
 
     const mensagem = buildWhatsAppMessage(customer);
@@ -1408,6 +1446,7 @@
 
     showToast('Pedido enviado! Confira e envie no WhatsApp que abriu. 🎉');
     orderState.cart = [];
+    orderState.paymentMethod = null;
     updateCartBadges();
     closeModal();
   }
