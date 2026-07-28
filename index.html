@@ -317,8 +317,6 @@
   @media(max-width:640px){ .product-grid{grid-template-columns:1fr;} }
 
   /* etapa de detalhe do produto (drawer / bottom sheet) */
-  .detail-photo{border-radius:12px;overflow:hidden;margin-bottom:18px;border:1px solid var(--line);}
-  .detail-photo img{display:block;width:100%;height:190px;object-fit:cover;}
   .detail-name{font-family:var(--font-display);font-size:26px;color:var(--gold-bright);}
   .detail-desc{font-size:13px;color:var(--text-dim);line-height:1.6;margin-top:8px;margin-bottom:22px;}
 
@@ -830,17 +828,6 @@
     sucos:       'Sucos'
   };
 
-  // Foto oficial do cardápio usada como "foto do produto" na etapa de personalização,
-  // mapeada por categoria (fotos oficiais reais do cardápio, sem imagens inventadas)
-  const CATEGORY_IMAGES = {
-    sanduiches: '/__l5e/assets-v1/f9894cd4-2f4a-4b91-9495-b287d57408dd/menu-lanches.jpeg',
-    combos:     '/__l5e/assets-v1/6168b432-ff26-4f3e-923f-39da9aa3eb05/menu-batatas-combos.jpeg',
-    batatas:    '/__l5e/assets-v1/6168b432-ff26-4f3e-923f-39da9aa3eb05/menu-batatas-combos.jpeg',
-    bebidas:    '/__l5e/assets-v1/d63b9f5c-826e-4e5f-ad00-dabf3c13b9a9/menu-bebidas-cremes.jpeg',
-    sucos:      '/__l5e/assets-v1/d63b9f5c-826e-4e5f-ad00-dabf3c13b9a9/menu-bebidas-cremes.jpeg',
-    cremes:     '/__l5e/assets-v1/d63b9f5c-826e-4e5f-ad00-dabf3c13b9a9/menu-bebidas-cremes.jpeg'
-  };
-
   // Todo o cardápio do restaurante, usado tanto na listagem quanto no cálculo de preços
   const MENU = [
     // ---- Sanduíches (aceitam adicionais) ----
@@ -1138,10 +1125,6 @@
     if(!product){ closeModal(); return; }
 
     let html = '';
-    const photo = CATEGORY_IMAGES[product.category];
-    if(photo){
-      html += '<div class="detail-photo"><img src="' + photo + '" alt="' + product.name + '" loading="lazy"></div>';
-    }
     html += '<div class="detail-name">' + product.name + '</div>';
     html += '<div class="detail-desc">' + product.desc + '</div>';
 
