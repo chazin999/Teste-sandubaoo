@@ -179,7 +179,6 @@
   .order-price{font-family:var(--font-mono);font-size:26px;font-weight:700;color:var(--paper);
     margin-top:22px;padding-top:18px;border-top:1px dashed var(--line-strong);}
   .order-price span{font-size:11px;color:var(--text-dim);font-weight:400;text-transform:uppercase;display:block;margin-top:2px;}
-  #openOrderModalBtn{margin-top:24px;justify-content:center;width:100%;border:none;cursor:pointer;font-size:14px;padding:17px 26px;}
 
   /* classes reaproveitadas dentro do modal de pedido (detalhe do produto / checkout) */
   .of-label{font-family:var(--font-mono);font-size:11px;color:var(--gold);letter-spacing:1.2px;
@@ -292,7 +291,34 @@
   .mi-select-btn:hover{background:var(--gold-bright);transform:translateY(-1px);}
   .menu-empty{text-align:center;color:var(--text-dim);font-size:13px;padding:40px 10px;}
 
-  /* etapa de detalhe do produto */
+  /* ---------- cardápio na página: cards de produto com botão "Comprar" ---------- */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .product-card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;
+    padding:24px 22px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;
+    box-shadow:0 18px 40px -26px rgba(0,0,0,.7);
+    transition:transform .25s cubic-bezier(.2,.7,.2,1), border-color .25s ease, box-shadow .25s ease;}
+  .product-card:hover{transform:translateY(-5px);border-color:var(--line-strong);
+    box-shadow:0 26px 54px -22px rgba(217,164,74,.35);}
+  .pc-name{font-family:var(--font-display);font-size:19px;color:var(--paper);line-height:1.15;}
+  .pc-desc{font-size:12.5px;color:var(--text-dim);line-height:1.55;margin-top:8px;}
+  .pc-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    border-top:1px dashed var(--line-strong);padding-top:16px;}
+  .pc-price{font-family:var(--font-mono);font-size:16px;color:var(--gold-bright);font-weight:700;}
+  .pc-buy-btn{flex-shrink:0;background:linear-gradient(135deg,var(--gold-bright),var(--gold));
+    color:#1A1204;border:none;border-radius:8px;font-family:var(--font-mono);font-size:11.5px;
+    font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:12px 18px;cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease;box-shadow:0 8px 18px -10px rgba(217,164,74,.7);}
+  .pc-buy-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(217,164,74,.85);}
+  .pc-buy-btn:active{transform:translateY(0) scale(.95);}
+
+  .menu-addons-note{font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:18px;}
+
+  @media(max-width:980px){ .product-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:640px){ .product-grid{grid-template-columns:1fr;} }
+
+  /* etapa de detalhe do produto (drawer / bottom sheet) */
+  .detail-photo{border-radius:12px;overflow:hidden;margin-bottom:18px;border:1px solid var(--line);}
+  .detail-photo img{display:block;width:100%;height:190px;object-fit:cover;}
   .detail-name{font-family:var(--font-display);font-size:26px;color:var(--gold-bright);}
   .detail-desc{font-size:13px;color:var(--text-dim);line-height:1.6;margin-top:8px;margin-bottom:22px;}
 
@@ -566,7 +592,7 @@
     <img class="logo-img" src="https://res.cloudinary.com/nexchat/image/upload/v1783654023/nexchat/media/emaryw507e4vfboma2b7.png" alt="Sandubão Delivery">
     <div class="nm">SANDUBÃO DELIVERY</div>
   </div>
-  <button class="nav-cta" type="button" onclick="openModal('menu')">Fazer pedido</button>
+  <button class="nav-cta" type="button" onclick="document.getElementById('cardapio').scrollIntoView({behavior:'smooth'})">Fazer pedido</button>
 </div></nav>
 
 <!-- HERO -->
@@ -577,7 +603,7 @@
       <h1>O sandubão<span>que vicia.</span></h1>
       <p class="hero-sub">Pão artesanal, recheio generoso e aquele sabor que surpreende — direto de Nova Crixás pro seu prato, quentinho e rápido.</p>
       <div class="hero-actions">
-        <button class="btn btn-primary" type="button" onclick="openModal('menu')">🛒 Montar meu pedido</button>
+        <button class="btn btn-primary" type="button" onclick="document.getElementById('cardapio').scrollIntoView({behavior:'smooth'})">🛒 Ver Cardápio</button>
         <a class="btn btn-ghost" href="#cardapio">Ver cardápio completo</a>
       </div>
       <div class="hero-strip">
@@ -592,35 +618,12 @@
   </div>
 </section>
 
-<!-- PEDIDO -->
-<section class="wrap" id="pedido">
+<!-- FOTOS OFICIAIS DO CARDÁPIO -->
+<section class="wrap" id="cardapio-fotos">
   <div class="section-head reveal">
-    <div class="eyebrow">Peça em 1 minuto</div>
-    <h2>Monte seu<br><em>X-Tudo.</em></h2>
-    <p>Escolha a quantidade, personalize do seu jeito e finalize direto no WhatsApp — sem precisar digitar nada.</p>
-  </div>
-
-  <div class="order-card reveal">
-    <div class="order-photo">
-      <span class="order-badge">Mais pedido</span>
-      <img src="https://images.unsplash.com/photo-1603508102983-99b101395d1a?q=80&w=1200&auto=format&fit=crop" alt="X-Tudo completo, com hambúrguer, bacon, ovo, catupiry, alface, tomate e batata palha">
-    </div>
-    <div class="order-info">
-      <h3>X-Tudo</h3>
-      <p class="order-desc">Pão artesanal · hambúrguer · presunto · mussarela · bacon · salsicha · ovo · catupiry · alface · tomate · milho · batata palha</p>
-      <div class="order-price">R$ 30,90 <span>por unidade</span></div>
-      <button class="btn btn-primary" id="openOrderModalBtn" type="button">🧾 Fazer Pedido</button>
-    </div>
-  </div>
-</section>
-
-
-<!-- CARDÁPIO (imagens oficiais) -->
-<section class="wrap" id="cardapio">
-  <div class="section-head reveal">
-    <div class="eyebrow">Cardápio</div>
-    <h2>Nosso<br><em>Cardápio.</em></h2>
-    <p>Escolha seu lanche favorito e faça seu pedido pelo WhatsApp.</p>
+    <div class="eyebrow">Cardápio oficial</div>
+    <h2>Fotos do<br><em>Cardápio.</em></h2>
+    <p>Prefere conferir em imagem? Veja as fotos oficiais do nosso cardápio completo.</p>
   </div>
 
   <div class="menu-gallery reveal-stagger">
@@ -639,12 +642,24 @@
   </div>
 </section>
 
+<!-- CARDÁPIO — experiência principal: cards por categoria com botão "Comprar" -->
+<section class="wrap" id="cardapio">
+  <div class="section-head reveal">
+    <div class="eyebrow">Cardápio</div>
+    <h2>Nosso<br><em>Cardápio.</em></h2>
+    <p>Escolha seu lanche favorito, personalize com adicionais e finalize direto no WhatsApp — sem precisar digitar nada.</p>
+  </div>
+
+  <div class="menu-tabs" id="pageMenuTabs"></div>
+  <div class="menu-list" id="pageMenuList"></div>
+</section>
+
 <!-- CTA Cardápio -->
 <section class="wrap menu-cta-section reveal">
   <div class="menu-cta-box">
     <h3>Já escolheu seu pedido?</h3>
-    <p>Monte seu combo agora e receba quentinho na sua casa.</p>
-    <button class="btn btn-primary menu-cta-btn" type="button" id="menuCtaBtn">🍔 Fazer pedido agora</button>
+    <p>Adicione ao carrinho e receba quentinho na sua casa.</p>
+    <button class="btn btn-primary menu-cta-btn" type="button" id="menuCtaBtn">🍔 Ver cardápio</button>
   </div>
 </section>
 
@@ -700,19 +715,13 @@
       <button class="modal-close" id="modalCloseBtn" type="button" aria-label="Fechar">×</button>
     </div>
 
-    <!-- ETAPA 1: lista completa do cardápio, por categoria -->
-    <div class="modal-step" id="stepMenu">
-      <div class="menu-tabs" id="menuTabs"></div>
-      <div class="menu-list" id="menuList"></div>
-    </div>
-
-    <!-- ETAPA 2: detalhe do produto selecionado (variação, adicionais, qtd, obs) -->
+    <!-- ETAPA 1: detalhe do produto selecionado (foto, variação, adicionais, qtd, obs) -->
     <div class="modal-step" id="stepDetail" hidden></div>
 
-    <!-- ETAPA 3: carrinho com todos os itens adicionados -->
+    <!-- ETAPA 2: carrinho com todos os itens adicionados -->
     <div class="modal-step" id="stepCart" hidden></div>
 
-    <!-- ETAPA 4: dados do cliente + finalização via WhatsApp -->
+    <!-- ETAPA 3: dados do cliente + finalização via WhatsApp -->
     <div class="modal-step" id="stepCheckout" hidden></div>
 
   </div>
@@ -810,14 +819,26 @@
     { id:'cebola',      name:'Cebola',      price:2.00  }
   ];
 
-  // Rótulos de exibição das categorias (na ordem das abas do modal)
+  // Rótulos de exibição das categorias (na ordem das abas do cardápio)
   const CATEGORY_LABELS = {
-    sanduiches: 'Sanduíches',
-    combos:     'Combos',
-    batatas:    'Batatas',
-    bebidas:    'Bebidas',
-    sucos:      'Sucos',
-    cremes:     'Cremes'
+    sanduiches:  'Lanches',
+    adicionais:  'Adicionais',
+    batatas:     'Batatas',
+    combos:      'Combos',
+    bebidas:     'Bebidas',
+    cremes:      'Cremes',
+    sucos:       'Sucos'
+  };
+
+  // Foto oficial do cardápio usada como "foto do produto" na etapa de personalização,
+  // mapeada por categoria (fotos oficiais reais do cardápio, sem imagens inventadas)
+  const CATEGORY_IMAGES = {
+    sanduiches: '/__l5e/assets-v1/f9894cd4-2f4a-4b91-9495-b287d57408dd/menu-lanches.jpeg',
+    combos:     '/__l5e/assets-v1/6168b432-ff26-4f3e-923f-39da9aa3eb05/menu-batatas-combos.jpeg',
+    batatas:    '/__l5e/assets-v1/6168b432-ff26-4f3e-923f-39da9aa3eb05/menu-batatas-combos.jpeg',
+    bebidas:    '/__l5e/assets-v1/d63b9f5c-826e-4e5f-ad00-dabf3c13b9a9/menu-bebidas-cremes.jpeg',
+    sucos:      '/__l5e/assets-v1/d63b9f5c-826e-4e5f-ad00-dabf3c13b9a9/menu-bebidas-cremes.jpeg',
+    cremes:     '/__l5e/assets-v1/d63b9f5c-826e-4e5f-ad00-dabf3c13b9a9/menu-bebidas-cremes.jpeg'
   };
 
   // Todo o cardápio do restaurante, usado tanto na listagem quanto no cálculo de preços
@@ -969,91 +990,134 @@
   }
 
   function showStep(step){
-    ['stepMenu','stepDetail','stepCart','stepCheckout'].forEach(function(id){
+    ['stepDetail','stepCart','stepCheckout'].forEach(function(id){
       document.getElementById(id).hidden = true;
     });
     document.getElementById('step' + step.charAt(0).toUpperCase() + step.slice(1)).hidden = false;
 
-    const titles = { menu:'Cardápio', detail:'Personalize', cart:'Seu carrinho', checkout:'Finalizar pedido' };
-    dom.modalTitle.textContent = titles[step] || 'Cardápio';
-    dom.modalBackBtn.hidden = (step === 'menu');
+    const titles = { detail:'Personalize seu pedido', cart:'Seu carrinho', checkout:'Finalizar pedido' };
+    dom.modalTitle.textContent = titles[step] || 'Seu pedido';
+    dom.modalBackBtn.hidden = (step !== 'checkout');
 
-    if(step === 'menu') renderMenuList();
     if(step === 'detail') renderProductDetail();
     if(step === 'cart') renderCart();
     if(step === 'checkout') renderCheckout();
   }
 
-  // Botão "voltar": detalhe volta pro cardápio; carrinho volta pro cardápio; checkout volta pro carrinho
+  // Único "voltar" que existe hoje: do checkout para o carrinho
   function handleBack(){
-    const current = ['stepMenu','stepDetail','stepCart','stepCheckout']
-      .find(function(id){ return !document.getElementById(id).hidden; });
-    if(current === 'stepDetail') showStep('menu');
-    else if(current === 'stepCart') showStep('menu');
-    else if(current === 'stepCheckout') showStep('cart');
-    else showStep('menu');
+    showStep('cart');
   }
 
-  /* ---------- 7. ETAPA 1 — LISTA DO CARDÁPIO ---------- */
-  function renderCategoryTabs(){
-    dom.menuTabs.innerHTML = Object.keys(CATEGORY_LABELS).map(function(cat){
+  /* ---------- 7. CARDÁPIO NA PÁGINA — cards por categoria com botão "Comprar" ---------- */
+  function renderPageCategoryTabs(){
+    dom.pageMenuTabs.innerHTML = Object.keys(CATEGORY_LABELS).map(function(cat){
       const active = cat === orderState.activeCategory ? ' active' : '';
       return '<button type="button" class="menu-tab' + active + '" data-cat="' + cat + '">' +
              CATEGORY_LABELS[cat] + '</button>';
     }).join('');
 
-    dom.menuTabs.querySelectorAll('.menu-tab').forEach(function(btn){
+    dom.pageMenuTabs.querySelectorAll('.menu-tab').forEach(function(btn){
       btn.addEventListener('click', function(){
         orderState.activeCategory = btn.dataset.cat;
-        renderCategoryTabs();
-        renderMenuItems();
+        renderPageCategoryTabs();
+        renderPageMenuItems();
       });
     });
   }
 
-  function renderMenuItems(){
-    const items = getMenuItemsByCategory(orderState.activeCategory);
-    if(items.length === 0){
-      dom.menuList.innerHTML = '<p class="menu-empty">Nenhum item nesta categoria.</p>';
+  function renderPageMenuItems(){
+    const cat = orderState.activeCategory;
+
+    // "Adicionais" agora também vira cards com botão "Comprar", como as outras abas —
+    // clicar abre o mesmo drawer, com quantidade, observações e adiciona direto ao carrinho.
+    if(cat === 'adicionais'){
+      dom.pageMenuList.innerHTML = '<div class="product-grid">' + ADDONS.map(function(a){
+        return (
+          '<div class="product-card">' +
+            '<div class="pc-body">' +
+              '<div class="pc-name">' + a.name + '</div>' +
+              '<div class="pc-desc">Adicional avulso para incrementar qualquer lanche.</div>' +
+            '</div>' +
+            '<div class="pc-footer">' +
+              '<div class="pc-price">' + formatBRL(a.price) + '</div>' +
+              '<button type="button" class="pc-buy-btn" data-addon-id="' + a.id + '">🟧 Comprar</button>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join('') + '</div>';
+
+      dom.pageMenuList.querySelectorAll('.pc-buy-btn[data-addon-id]').forEach(function(btn){
+        btn.addEventListener('click', function(){ buyAddon(btn.dataset.addonId); });
+      });
       return;
     }
-    dom.menuList.innerHTML = items.map(function(item){
+
+    const items = getMenuItemsByCategory(cat);
+    if(items.length === 0){
+      dom.pageMenuList.innerHTML = '<p class="menu-empty">Nenhum item nesta categoria.</p>';
+      return;
+    }
+
+    dom.pageMenuList.innerHTML = '<div class="product-grid">' + items.map(function(item){
       const priceLabel = item.variants
         ? 'A partir de ' + formatBRL(getStartingPrice(item))
         : formatBRL(item.price);
       return (
-        '<div class="menu-item-card">' +
-          '<div class="mi-info">' +
-            '<div class="mi-name">' + item.name + '</div>' +
-            '<div class="mi-desc">' + item.desc + '</div>' +
-            '<div class="mi-price">' + priceLabel + '</div>' +
+        '<div class="product-card">' +
+          '<div class="pc-body">' +
+            '<div class="pc-name">' + item.name + '</div>' +
+            '<div class="pc-desc">' + item.desc + '</div>' +
           '</div>' +
-          '<button type="button" class="mi-select-btn" data-id="' + item.id + '">Selecionar</button>' +
+          '<div class="pc-footer">' +
+            '<div class="pc-price">' + priceLabel + '</div>' +
+            '<button type="button" class="pc-buy-btn" data-id="' + item.id + '">🟧 Comprar</button>' +
+          '</div>' +
         '</div>'
       );
-    }).join('');
+    }).join('') + '</div>';
 
-    dom.menuList.querySelectorAll('.mi-select-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        const product = MENU.find(function(p){ return p.id === btn.dataset.id; });
-        openProductDetail(product);
-      });
+    dom.pageMenuList.querySelectorAll('.pc-buy-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ buyProduct(btn.dataset.id); });
     });
   }
 
-  function renderMenuList(){
-    renderCategoryTabs();
-    renderMenuItems();
+  function renderPageMenu(){
+    renderPageCategoryTabs();
+    renderPageMenuItems();
   }
 
-  /* ---------- 8. ETAPA 2 — DETALHE DO PRODUTO ---------- */
-  function openProductDetail(product){
+  /* ---------- 8. ETAPA "Comprar" → abre o Drawer/Bottom Sheet direto no produto ---------- */
+  function buyProduct(id){
+    const product = MENU.find(function(p){ return p.id === id; });
+    if(!product) return;
     orderState.selectedProduct = product;
     orderState.detailVariantIdx = 0;
     orderState.detailAddonIds = new Set();
     orderState.detailQty = 1;
     orderState.detailObs = '';
-    showStep('detail');
+    openModal('detail');
+  }
+
+  // Igual ao buyProduct, mas para um adicional avulso da aba "Adicionais"
+  // (monta um "produto" simples a partir do item de ADDONS)
+  function buyAddon(addonId){
+    const addon = ADDONS.find(function(a){ return a.id === addonId; });
+    if(!addon) return;
+    orderState.selectedProduct = {
+      id: 'addon-' + addon.id,
+      name: addon.name,
+      desc: 'Adicional avulso para incrementar qualquer lanche.',
+      price: addon.price,
+      category: 'adicionais',
+      hasAddons: false,
+      variants: null
+    };
+    orderState.detailVariantIdx = 0;
+    orderState.detailAddonIds = new Set();
+    orderState.detailQty = 1;
+    orderState.detailObs = '';
+    openModal('detail');
   }
 
   function getDetailUnitPrice(){
@@ -1071,9 +1135,13 @@
 
   function renderProductDetail(){
     const product = orderState.selectedProduct;
-    if(!product){ showStep('menu'); return; }
+    if(!product){ closeModal(); return; }
 
     let html = '';
+    const photo = CATEGORY_IMAGES[product.category];
+    if(photo){
+      html += '<div class="detail-photo"><img src="' + photo + '" alt="' + product.name + '" loading="lazy"></div>';
+    }
     html += '<div class="detail-name">' + product.name + '</div>';
     html += '<div class="detail-desc">' + product.desc + '</div>';
 
@@ -1261,7 +1329,7 @@
       dom.stepCart.innerHTML =
         '<p class="cart-empty">Seu carrinho está vazio.<br>Volte ao cardápio para adicionar itens.</p>' +
         '<button type="button" class="cart-add-more" id="backToMenuBtn">← Ver cardápio</button>';
-      document.getElementById('backToMenuBtn').addEventListener('click', function(){ showStep('menu'); });
+      document.getElementById('backToMenuBtn').addEventListener('click', function(){ goToPageMenu(); });
       return;
     }
 
@@ -1305,7 +1373,7 @@
 
     dom.stepCart.innerHTML = html;
 
-    document.getElementById('backToMenuBtn').addEventListener('click', function(){ showStep('menu'); });
+    document.getElementById('backToMenuBtn').addEventListener('click', function(){ goToPageMenu(); });
     document.getElementById('goToCheckoutBtn').addEventListener('click', function(){ showStep('checkout'); });
     dom.stepCart.querySelectorAll('.cart-item-remove').forEach(function(btn){
       btn.addEventListener('click', function(){ removeCartItem(btn.dataset.id); });
@@ -1433,6 +1501,13 @@
     closeModal();
   }
 
+  // Fecha o drawer e rola até os cards do cardápio na página, para escolher mais itens
+  function goToPageMenu(){
+    closeModal();
+    const cardapio = document.getElementById('cardapio');
+    if(cardapio) cardapio.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
   /* ---------- 12. TOAST DE CONFIRMAÇÃO ---------- */
   function showToast(message){
     const toast = document.createElement('div');
@@ -1455,17 +1530,15 @@
       modalCloseBtn: document.getElementById('modalCloseBtn'),
       modalCartBtn: document.getElementById('modalCartBtn'),
       modalCartBadge: document.getElementById('modalCartBadge'),
-      menuTabs: document.getElementById('menuTabs'),
-      menuList: document.getElementById('menuList'),
+      pageMenuTabs: document.getElementById('pageMenuTabs'),
+      pageMenuList: document.getElementById('pageMenuList'),
       stepDetail: document.getElementById('stepDetail'),
       stepCart: document.getElementById('stepCart'),
       stepCheckout: document.getElementById('stepCheckout'),
       cartFab: document.getElementById('cartFab'),
-      cartFabBadge: document.getElementById('cartFabBadge'),
-      openOrderModalBtn: document.getElementById('openOrderModalBtn')
+      cartFabBadge: document.getElementById('cartFabBadge')
     };
 
-    dom.openOrderModalBtn.addEventListener('click', function(){ openModal('menu'); });
     dom.modalCloseBtn.addEventListener('click', closeModal);
     dom.modalBackBtn.addEventListener('click', handleBack);
     dom.modalCartBtn.addEventListener('click', function(){ showStep('cart'); });
@@ -1480,6 +1553,7 @@
       if(e.key === 'Escape' && dom.overlay.classList.contains('show')) closeModal();
     });
 
+    renderPageMenu();
     updateCartBadges();
   }
 
@@ -1622,12 +1696,8 @@
   const cta = document.getElementById('menuCtaBtn');
   if(cta){
     cta.addEventListener('click', function(){
-      if(typeof window.openModal === 'function'){
-        window.openModal('menu');
-      } else {
-        const pedido = document.getElementById('pedido');
-        if(pedido) pedido.scrollIntoView({behavior:'smooth', block:'start'});
-      }
+      const cardapio = document.getElementById('cardapio');
+      if(cardapio) cardapio.scrollIntoView({behavior:'smooth', block:'start'});
     });
   }
 })();
